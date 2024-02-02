@@ -1,0 +1,57 @@
+﻿@model IEnumerable<webApp_Books.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Home page</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class=" md-form mb-3">
+    <input class="form-control" type="text" autofocus placeholder="Search" onkeyup="bookSearch(event,this.value)" />
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Writer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (Book b in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => b.BookName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => b.Writer)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@b.BookID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@b.BookID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@b.BookID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts {
+
+    <script>
+        function bookSearch(e, filter) {
+            if (e.keyCode == 13) {
+                window.location.href = "/Book/Index?filter=" + filter;
+            }
+        }
+    </script>
+}
